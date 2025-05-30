@@ -32,6 +32,36 @@
             <inertia ixx="0.100123333" ixy="0" ixz="0" iyy="0.100123333" iyz="0" izz="0.160205" />
         </interial>
     </link>
+
+    <!-- Hokuyo Laser -->
+
+    <joint name="barista_body_hokuyo_laser_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 -0.0895 0.1726" />
+        <parent link="barista_body" />
+        <child link="hokuyo_laser_link" />
+    </joint>
+
+    <link name="hokuyo_laser_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="package://barista_robot_description/meshes/hokuyo_urg_04lx.dae" />
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="package://barista_robot_description/meshes/hokuyo_urg_04lx.dae" />
+            </geometry>
+        </collision>
+
+         <interial>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <mass value="1.5" />
+            <inertia ixx="0.0625" ixy="0" ixz="0" iyy="0.0625" iyz="0" izz="0.0625" />
+        </interial>
+    </link>
     
     <!-- Right Motor Wheel -->
 
@@ -171,14 +201,14 @@
     <!-- Standoff Rod One -->
 
     <joint name="barista_body_standoff_rod_one_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="0.0895 0.0895 0.2883" />
+        <origin rpy="0 0 0" xyz="0.0895 0.0543 0.1726" />
         <parent link="barista_body" />
         <child link="standoff_rod_one" />
     </joint>
 
     <link name="standoff_rod_one">
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 0" />
+            <origin rpy="0 0 0" xyz="0 0 0.11" />
             <geometry>
                 <cylinder radius="0.01" length="0.22" />
             </geometry>
@@ -204,14 +234,14 @@
     <!-- Standoff Rod Two -->
 
     <joint name="barista_body_standoff_rod_two_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="0.0895 -0.0895 0.2883" />
+        <origin rpy="0 0 0" xyz="0.0895 -0.0543 0.1726" />
         <parent link="barista_body" />
         <child link="standoff_rod_two" />
     </joint>
 
     <link name="standoff_rod_two">
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 0" />
+            <origin rpy="0 0 0" xyz="0 0 0.11" />
             <geometry>
                 <cylinder radius="0.01" length="0.22" />
             </geometry>
@@ -237,14 +267,14 @@
     <!-- Standoff Rod Three -->
 
     <joint name="barista_body_standoff_rod_three_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="-0.0895 0.0895 0.2883" />
+        <origin rpy="0 0 0" xyz="-0.0895 0.0543 0.1726" />
         <parent link="barista_body" />
         <child link="standoff_rod_three" />
     </joint>
 
     <link name="standoff_rod_three">
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 0" />
+            <origin rpy="0 0 0" xyz="0 0 0.11" />
             <geometry>
                 <cylinder radius="0.01" length="0.22" />
             </geometry>
@@ -270,14 +300,14 @@
     <!-- Standoff Rod Four -->
 
     <joint name="barista_body_standoff_rod_four_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="-0.0895 -0.0895 0.2883" />
+        <origin rpy="0 0 0" xyz="-0.0895 -0.0543 0.1726" />
         <parent link="barista_body" />
         <child link="standoff_rod_four" />
     </joint>
 
     <link name="standoff_rod_four">
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 0" />
+            <origin rpy="0 0 0" xyz="0 0 0.11" />
             <geometry>
                 <cylinder radius="0.01" length="0.22" />
             </geometry>
@@ -303,7 +333,7 @@
     <!-- Barista Top -->
     
     <joint name="barista_body_barista_top_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="0 0 0.4454" />
+        <origin rpy="0 0 0" xyz="0 0 0.4376" />
         <parent link="barista_body" />
         <child link="barista_top" />
     </joint>
