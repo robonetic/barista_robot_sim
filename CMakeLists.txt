@@ -24,3 +24,10 @@ if(BUILD_TESTING)
 endif()
 
 ament_package()
+
+install(DIRECTORY
+	launch
+	rviz
+	urdf
+	DESTINATION share/${PROJECT_NAME}
+)
