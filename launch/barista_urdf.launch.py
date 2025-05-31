@@ -8,7 +8,6 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
 
-
 package_name = "barista_robot_description"
 
 def generate_launch_description():
