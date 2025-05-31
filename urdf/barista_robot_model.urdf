@@ -132,15 +132,16 @@
         </inertial>
     </link>
 
-    <!-- Front Caster Wheel -->
+    <!-- Back Caster Wheel -->
 
-    <joint name="barista_body_front_caster_wheel_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="0 0.1198 0.0352" />
+    <joint name="barista_body_back_caster_wheel_joint" type="continuous">
+        <origin rpy="0 0 0" xyz="0 0.135 0.0352" />
         <parent link="barista_body" />
-        <child link="front_caster_wheel" />
+        <child link="back_caster_wheel" />
+        <axis xyz="1 0 0" />
     </joint>
 
-    <link name="front_caster_wheel">
+    <link name="back_caster_wheel">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
@@ -160,20 +161,21 @@
 
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0" />
-            <mass value="1.5" />
-            <inertia ixx="0.000743424" ixy="0" ixz="0" iyy="0.000743424" iyz="0" izz="0.000743424" />
+            <mass value="0.5" />
+            <inertia ixx="0.000247808" ixy="0" ixz="0" iyy="0.000247808" iyz="0" izz="0.000247808" />
         </inertial>
     </link>
 
-    <!-- Back Caster Wheel -->
+    <!-- Front Caster Wheel -->
 
-    <joint name="barista_body_back_caster_wheel_joint" type="fixed">
-        <origin rpy="0 0 0" xyz="0 -0.1198 0.0352" />
+    <joint name="barista_body_front_caster_wheel_joint" type="continuous">
+        <origin rpy="0 0 0" xyz="0 -0.135 0.0352" />
         <parent link="barista_body" />
-        <child link="back_caster_wheel" />
+        <child link="front_caster_wheel" />
+        <axis xyz="1 0 0" />
     </joint>
 
-    <link name="back_caster_wheel">
+    <link name="front_caster_wheel">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
@@ -193,8 +195,8 @@
 
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0" />
-            <mass value="1.5" />
-            <inertia ixx="0.000743424" ixy="0" ixz="0" iyy="0.000743424" iyz="0" izz="0.000743424" />
+            <mass value="0.5" />
+            <inertia ixx="0.000247808" ixy="0" ixz="0" iyy="0.000247808" iyz="0" izz="0.000247808" />
         </inertial>
     </link>
 
@@ -362,4 +364,110 @@
             <inertia ixx="0.04342625" ixy="0" ixz="0" iyy="0.04342625" iyz="0" izz="0.0801025" />
         </inertial>
     </link>
+
+    <!-- Gazebo Plugin References -->
+
+    <gazebo>
+        <link name="front_caster_wheel">
+            <surface>
+            <friction>
+                <ode>
+                <mu>0.01</mu>
+                <mu2>0.01</mu2>
+                </ode>
+            </friction>
+            </surface>
+        </link>
+    </gazebo>
+
+    <gazebo>
+        <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+
+        <!-- wheels -->
+        <left_joint>barista_body_left_motor_wheel_joint</left_joint>
+        <right_joint>barista_body_right_motor_wheel_joint</right_joint>
+
+        <!-- kinematics -->
+        <wheel_separation>0.31</wheel_separation>
+        <wheel_diameter>0.0704</wheel_diameter>
+
+        <!-- limits -->
+        <max_wheel_torque>1.0</max_wheel_torque>
+        <max_wheel_acceleration>2.0</max_wheel_acceleration>
+
+        <!-- output -->
+        <publish_odom>true</publish_odom>
+        <publish_odom_tf>true</publish_odom_tf>
+
+        <odometry_frame>odom</odometry_frame>
+        <robot_base_frame>base_link</robot_base_frame>
+
+        </plugin>
+    </gazebo>
+
+
+    <gazebo reference="hokuyo_laser_link">
+        <sensor name="sensor_ray" type="ray">
+            <pose>0 0 0 0 0 0</pose>
+            <ray>
+            <scan>
+                <horizontal>
+                <samples>200</samples>
+                <resolution>1.0</resolution>
+                <min_angle>-3.14</min_angle>
+                <max_angle>3.14</max_angle>
+                </horizontal>
+            </scan>
+            <range>
+                <min>0.1</min>
+                <max>5.0</max>
+            </range>
+            </ray>
+            <always_on>true</always_on>
+            <visualize>true</visualize>
+            <update_rate>100.0</update_rate>
+            <plugin name="laser" filename="libgazebo_ros_ray_sensor.so">
+            <ros>
+                <namespace>/barista_bot</namespace>
+                <remapping>~/out:=laser_scan</remapping>
+            </ros>
+            <output_type>sensor_msgs/LaserScan</output_type>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+    <!--Gazebo Color References -->
+
+    <gazebo reference="right_motor_wheel">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <gazebo reference="left_motor_wheel">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <gazebo reference="standoff_rod_one">
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="standoff_rod_two">
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="standoff_rod_three">
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="standoff_rod_four">
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+
+    <gazebo reference="barista_body">
+        <material>Gazebo/SkyBlue</material>
+    </gazebo>
+
+    <gazebo reference="barista_top">
+        <material>Gazebo/SkyBlue</material>
+    </gazebo>
 </robot>

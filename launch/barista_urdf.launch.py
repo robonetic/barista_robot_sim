@@ -3,7 +3,9 @@ import random
 
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from ament_index_python.packages import get_package_share_directory, get_package_prefix
+from ament_index_python.packages import get_package_share_directory
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
 
 
@@ -15,6 +17,8 @@ def generate_launch_description():
 
     rviz_file = os.path.join(get_package_share_directory(
         package_name), "rviz", "urdf_vis.rviz")
+
+    gazebo_ros_share = get_package_share_directory('gazebo_ros')
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
@@ -40,9 +44,14 @@ def generate_launch_description():
         arguments=[{"-d", rviz_file}]
     )
 
+    gazebo_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(gazebo_ros_share, "launch", "gazebo.launch.py")
+        )
+    )
+
     robot_name = "barista-bot"+"-"+str(int(random.random() * 10000))
 
-    # Spawn ROBOT Set Gazebo
     spawn_barista_bot = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
@@ -56,6 +65,6 @@ def generate_launch_description():
 
 
     return LaunchDescription(
-        [robot_state_publisher_node, joint_state_pulbisher_node, rviz_node, spawn_barista_bot]
+        [robot_state_publisher_node, joint_state_pulbisher_node, rviz_node, gazebo_node ,spawn_barista_bot]
     )
 
